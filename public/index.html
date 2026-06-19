@@ -152,26 +152,60 @@
 
     .hero-track {
       position: absolute;
-      right: -50px;
       top: 50%;
-      transform: translateY(-50%);
-      width: min(580px, 52vw);
+      left: 50%;
+      transform: translate(-38%, -52%);
+      width: min(820px, 88vw);
       pointer-events: none;
-      opacity: 0.28;
+      opacity: 0.20;
     }
 
     .hero-track svg {
       width: 100%;
       height: auto;
-      filter: drop-shadow(0 0 14px rgba(225, 6, 0, 0.55));
+      filter: drop-shadow(0 0 16px rgba(225, 6, 0, 0.5));
     }
 
+    /* ── Team chips ── */
+    .team-row {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      margin-bottom: 1.75rem;
+      flex-wrap: wrap;
+    }
+
+    .team-row-label {
+      font-size: 0.68rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 500;
+      margin-right: 0.1rem;
+    }
+
+    .team-chip {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.22rem 0.65rem;
+      border-radius: 3px;
+      border-left: 3px solid;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .team-chip.ferrari  { border-color: #DC0000; color: #ff5555; }
+    .team-chip.redbull  { border-color: #3671C6; color: #7aaef8; }
+    .team-chip.mclaren  { border-color: #FF8000; color: #ffaa44; }
+    .team-chip.mercedes { border-color: #00D2BE; color: #22e8d4; }
+
     @media (max-width: 900px) {
-      .hero-track { width: min(420px, 80vw); right: -80px; opacity: 0.18; }
+      .hero-track { width: min(580px, 88vw); transform: translate(-35%, -52%); opacity: 0.15; }
     }
 
     @media (max-width: 600px) {
-      .hero-track { width: 320px; right: -100px; top: auto; bottom: 40px; transform: none; opacity: 0.12; }
+      .hero-track { width: min(380px, 90vw); top: auto; left: 50%; bottom: 30px; transform: translateX(-50%); opacity: 0.11; }
     }
 
     #hero h1 {
@@ -353,12 +387,12 @@
   <!-- ── Hero ── -->
   <section id="hero">
 
-    <!-- Interlagos circuit outline -->
+    <!-- Interlagos circuit outline (accurately traced from official map) -->
     <div class="hero-track" aria-hidden="true">
-      <svg viewBox="0 0 500 355" xmlns="http://www.w3.org/2000/svg">
+      <svg viewBox="0 0 820 520" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <filter id="track-glow" x="-25%" y="-25%" width="150%" height="150%">
-            <feGaussianBlur stdDeviation="3.5" result="blur"/>
+          <filter id="track-glow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="4" result="blur"/>
             <feMerge>
               <feMergeNode in="blur"/>
               <feMergeNode in="SourceGraphic"/>
@@ -366,44 +400,54 @@
           </filter>
         </defs>
 
-        <!-- Circuit centerline -->
+        <!--
+          Corner key (clockwise, matching official Interlagos layout):
+          T1 (33,255) → T2 (50,318) → T3 (65,429)
+          → bottom sweep → T4 (591,494) → T5 (601,352)
+          → infield: T6 (332,232) → T7 (294,172) → T8 (397,98)
+          → T9 (374,183) → T10 (475,89) → T11 (529,209)
+          → T12 (768,322) → T13 (784,195) → T14 (657,26) → T15 (376,22)
+          → S/F straight diagonal back to T1
+        -->
         <path
-          d="M 62,92
-             C 148,86 240,83 308,86
-             C 352,88 385,100 400,122
-             C 418,145 416,170 400,182
-             C 382,192 365,190 358,200
-             C 354,210 360,228 374,250
-             C 388,270 388,292 370,305
-             C 352,318 320,322 288,318
-             C 256,314 232,302 220,282
-             C 208,262 210,242 225,234
-             C 240,226 258,228 266,240
-             C 274,252 270,268 256,274
-             C 240,280 216,274 200,256
-             C 175,230 145,192 118,150
-             C 96,118 73,102 62,92 Z"
+          d="M 33,255
+             C 35,278 45,298 50,318
+             C 52,350 58,395 65,429
+             C 190,492 420,510 591,494
+             C 598,462 602,402 601,352
+             C 548,318 415,252 332,232
+             C 316,210 300,185 294,172
+             C 304,144 362,108 397,98
+             C 390,132 378,160 374,183
+             C 388,148 444,106 475,89
+             C 492,116 514,170 529,209
+             C 588,228 704,296 768,322
+             C 774,290 779,232 784,195
+             C 788,148 718,60 657,26
+             C 578,16 458,16 376,22
+             C 318,54 108,178 33,255
+             Z"
           stroke="#e10600"
-          stroke-width="7"
+          stroke-width="9"
           fill="none"
           stroke-linecap="round"
           stroke-linejoin="round"
           filter="url(#track-glow)"
         />
 
-        <!-- Start / Finish line -->
-        <line x1="162" y1="82" x2="162" y2="97" stroke="#ffffff" stroke-width="3.5" opacity="0.9"/>
+        <!-- Start / Finish line (perpendicular to the diagonal straight) -->
+        <line x1="178" y1="136" x2="190" y2="153" stroke="#ffffff" stroke-width="4" opacity="0.85"/>
 
         <!-- Circuit name -->
         <text
-          x="250" y="348"
+          x="330" y="512"
           fill="#e10600"
-          font-size="9.5"
+          font-size="11"
           font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
           font-weight="700"
-          letter-spacing="0.22em"
+          letter-spacing="0.25em"
           text-anchor="middle"
-          opacity="0.55"
+          opacity="0.5"
         >INTERLAGOS</text>
       </svg>
     </div>
@@ -415,6 +459,14 @@
         Software developer and student at SIT — building things on the web,
         exploring machine learning, and solving problems that matter.
       </p>
+      <div class="team-row">
+        <span class="team-row-label">Fan of</span>
+        <span class="team-chip ferrari">Ferrari</span>
+        <span class="team-chip redbull">Red Bull</span>
+        <span class="team-chip mclaren">McLaren</span>
+        <span class="team-chip mercedes">Mercedes</span>
+      </div>
+
       <div class="hero-links">
         <a class="btn btn-primary" href="mailto:lukesh.sundaram99@gmail.com">Email me</a>
         <a class="btn btn-ghost" href="https://github.com/NeraBot" target="_blank" rel="noopener">GitHub</a>
